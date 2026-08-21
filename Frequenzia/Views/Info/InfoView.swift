@@ -23,7 +23,9 @@ struct InfoView: View {
             List {
                 Section {
                     VStack(spacing: 12) {
-                        appIcon
+                        Image("Logo")
+                            .resizable()
+                            .scaledToFit()
                             .frame(width: 72, height: 72)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                         Text("Frequenzia")
@@ -53,18 +55,6 @@ struct InfoView: View {
                 }
             }
             .navigationTitle("Info")
-        }
-    }
-
-    @ViewBuilder
-    private var appIcon: some View {
-        if let icon = UIImage(named: "AppIcon") {
-            Image(uiImage: icon)
-                .resizable()
-                .scaledToFit()
-        } else {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(.quaternary)
         }
     }
 }
