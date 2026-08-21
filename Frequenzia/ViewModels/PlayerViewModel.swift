@@ -207,8 +207,17 @@ final class PlayerViewModel {
             guard let (data, _) = try? await URLSession.shared.data(from: url),
                   let image = UIImage(data: data) else { return }
             guard !Task.isCancelled, let self, self.currentStation?.stationuuid == station.stationuuid else { return }
-            self.cachedArtwork = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+            self.cachedArtwork = Self.makeArtwork(image: image)
             self.updateNowPlayingInfo()
         }
+    }
+
+    /// `nonisolated`, damit der `requestHandler`-Closure nicht fälschlich
+    /// MainActor-Isolation von der umgebenden Klasse erbt – MediaPlayer ruft
+    /// ihn von einer eigenen internen Queue auf, nicht vom Main Thread.
+    /// Ohne dieses Auslagern crasht die App beim Abspielen mit einem
+    /// dispatch_assert_queue-Trap in loadArtwork.
+    private nonisolated static func makeArtwork(image: UIImage) -> MPMediaItemArtwork {
+        MPMediaItemArtwork(boundsSize: image.size) { _ in image }
     }
 }
