@@ -5,6 +5,12 @@
 //  Rein dekorative "läuft gerade"-Animation (hüpfende Punkte) – kein
 //  echtes Audiosignal, siehe CLAUDE.md Player-Beschreibung.
 //
+//  Läuft über TimelineView statt über ein implizites `.animation(value:)`
+//  mit `.repeatForever().delay(...)`: Diese Kombination bleibt in der
+//  Praxis nach der ersten Wiederholung stehen, statt endlos weiterzulaufen
+//  (echter Bug, siehe Nutzer-Feedback). TimelineView berechnet die Position
+//  jeder Bildwiederholung neu und kann daher nicht "stecken bleiben".
+//
 
 import SwiftUI
 
@@ -12,29 +18,30 @@ struct EqualizerView: View {
     var isAnimating: Bool
     var color: Color = .accentColor
 
-    @State private var bounce = false
-
     private let dotCount = 5
     private let dotSize: CGFloat = 7
+    private let bounceHeight: CGFloat = 5
+    private let speed: Double = 4.5
 
     var body: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<dotCount, id: \.self) { index in
-                Circle()
-                    .fill(color)
-                    .frame(width: dotSize, height: dotSize)
-                    .offset(y: bounce ? -5 : 0)
-                    .animation(
-                        isAnimating
-                            ? .easeInOut(duration: 0.5).repeatForever(autoreverses: true).delay(Double(index) * 0.1)
-                            : .easeOut(duration: 0.2),
-                        value: bounce
-                    )
+        TimelineView(.animation(paused: !isAnimating)) { context in
+            let time = context.date.timeIntervalSinceReferenceDate
+            HStack(spacing: 6) {
+                ForEach(0..<dotCount, id: \.self) { index in
+                    Circle()
+                        .fill(color)
+                        .frame(width: dotSize, height: dotSize)
+                        .offset(y: isAnimating ? offset(at: time, index: index) : 0)
+                }
             }
         }
         .frame(height: 20)
         .opacity(isAnimating ? 1 : 0.35)
-        .onAppear { bounce = isAnimating }
-        .onChange(of: isAnimating) { _, newValue in bounce = newValue }
+    }
+
+    private func offset(at time: TimeInterval, index: Int) -> CGFloat {
+        let phase = Double(index) * 0.6
+        let wave = sin(time * speed + phase)
+        return -CGFloat(max(wave, 0)) * bounceHeight
     }
 }
