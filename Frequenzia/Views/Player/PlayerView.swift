@@ -116,28 +116,27 @@ struct PlayerView: View {
         }
     }
 
-    /// Play/Pause bleibt bildschirmmittig; der Favoriten-Stern hängt links
-    /// daneben, statt die ganze Gruppe (und damit den Play-Button) durch ein
-    /// zentriertes HStack aus der Mitte zu schieben.
+    /// Play/Pause bleibt bildschirmmittig; der Favoriten-Stern hängt in
+    /// festem Abstand direkt links daneben (per Offset vom Zentrum aus),
+    /// statt die ganze Gruppe (und damit den Play-Button) durch ein
+    /// zentriertes HStack aus der Mitte zu schieben oder ganz an den
+    /// Bildschirmrand zu wandern.
     private func controls(station: RadioStation) -> some View {
         ZStack {
+            Button(action: onToggleFavorite) {
+                Image(systemName: isFavorite ? "star.fill" : "star")
+                    .font(.title)
+                    .foregroundStyle(isFavorite ? .yellow : .primary)
+            }
+            .buttonStyle(.plain)
+            .offset(x: -56)
+
             Button(action: { togglePlayback(station: station) }) {
                 Image(systemName: player.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(Color.accentColor)
             }
             .buttonStyle(.plain)
-
-            HStack {
-                Button(action: onToggleFavorite) {
-                    Image(systemName: isFavorite ? "star.fill" : "star")
-                        .font(.title)
-                        .foregroundStyle(isFavorite ? .yellow : .primary)
-                }
-                .buttonStyle(.plain)
-
-                Spacer()
-            }
         }
         .frame(maxWidth: .infinity)
     }
