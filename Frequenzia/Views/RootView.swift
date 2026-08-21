@@ -79,25 +79,34 @@ struct RootView: View {
     private var compactLayout: some View {
         TabView(selection: $selectedTab) {
             SearchView(player: player)
+                .safeAreaInset(edge: .bottom) { miniPlayerInset }
                 .tag(Tab.search)
                 .tabItem { Label(Tab.search.title, systemImage: Tab.search.icon) }
 
             FavoritesView(player: player)
+                .safeAreaInset(edge: .bottom) { miniPlayerInset }
                 .tag(Tab.favorites)
                 .tabItem { Label(Tab.favorites.title, systemImage: Tab.favorites.icon) }
 
             HistoryView(player: player)
+                .safeAreaInset(edge: .bottom) { miniPlayerInset }
                 .tag(Tab.history)
                 .tabItem { Label(Tab.history.title, systemImage: Tab.history.icon) }
 
             InfoView()
+                .safeAreaInset(edge: .bottom) { miniPlayerInset }
                 .tag(Tab.info)
                 .tabItem { Label(Tab.info.title, systemImage: Tab.info.icon) }
         }
-        .safeAreaInset(edge: .bottom) {
-            if player.hasStation {
-                MiniPlayerView(player: player, onTap: { isPlayerPresented = true })
-            }
+    }
+
+    // Wichtig: der Inset muss am Inhalt JEDES Tabs hängen, nicht an der
+    // TabView selbst – sonst legt sich der Mini-Player unter die Tab-Bar
+    // statt sauber darüber (echter Bug, siehe Nutzer-Feedback).
+    @ViewBuilder
+    private var miniPlayerInset: some View {
+        if player.hasStation {
+            MiniPlayerView(player: player, onTap: { isPlayerPresented = true })
         }
     }
 
