@@ -41,6 +41,19 @@ struct SearchView: View {
                 systemImage: "dot.radiowaves.left.and.right",
                 description: Text(message)
             )
+        } else if viewModel.stations.isEmpty, viewModel.loadState == .loaded {
+            if viewModel.searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                ContentUnavailableView(
+                    "Keine Sender verfügbar",
+                    systemImage: "dot.radiowaves.left.and.right"
+                )
+            } else {
+                ContentUnavailableView(
+                    "Keine Treffer für „\(viewModel.searchText)“",
+                    systemImage: "magnifyingglass",
+                    description: Text("Prüfe die Schreibweise oder versuche einen anderen Suchbegriff.")
+                )
+            }
         } else {
             List {
                 if case .error(let message) = viewModel.loadState {
