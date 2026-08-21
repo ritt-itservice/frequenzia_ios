@@ -59,6 +59,7 @@ struct FavoritesView: View {
                                         onPlay: { play(favorite.asStation) },
                                         onToggleFavorite: { modelContext.delete(favorite) }
                                     )
+                                    .listRowBackground(Color("AppBackground"))
                                 }
                             } header: {
                                 Text(section.key).id(section.key)
@@ -66,6 +67,7 @@ struct FavoritesView: View {
                         }
                     }
                     .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
 
                     if !allFavorites.isEmpty {
                         AlphabetIndexBar(availableLetters: availableLetters) { letter in
@@ -78,6 +80,7 @@ struct FavoritesView: View {
             }
             .navigationTitle("Favoriten")
             .searchable(text: $searchText, prompt: "Favoriten durchsuchen")
+            .background(Color("AppBackground").ignoresSafeArea())
             .overlay {
                 if allFavorites.isEmpty {
                     ContentUnavailableView(

@@ -25,6 +25,7 @@ struct SearchView: View {
             content
                 .navigationTitle("Sender")
                 .searchable(text: $viewModel.searchText, prompt: "Name, Land oder Genre")
+                .background(Color("AppBackground").ignoresSafeArea())
         }
         .onAppear { viewModel.onAppear() }
     }
@@ -48,6 +49,7 @@ struct SearchView: View {
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
+                    .listRowBackground(Color("AppBackground"))
                 }
 
                 ForEach(viewModel.stations) { station in
@@ -60,9 +62,11 @@ struct SearchView: View {
                         onPlay: { play(station) },
                         onToggleFavorite: { toggleFavorite(station) }
                     )
+                    .listRowBackground(Color("AppBackground"))
                 }
             }
             .listStyle(.plain)
+            .scrollContentBackground(.hidden)
         }
     }
 

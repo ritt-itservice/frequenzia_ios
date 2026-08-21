@@ -33,9 +33,12 @@ struct HistoryView: View {
                         onPlay: { play(entry.asStation) },
                         onToggleFavorite: { toggleFavorite(entry.asStation) }
                     )
+                    .listRowBackground(Color("AppBackground"))
                 }
             }
             .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color("AppBackground").ignoresSafeArea())
             .navigationTitle("Zuletzt gehört")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

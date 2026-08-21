@@ -153,6 +153,7 @@ struct RootView: View {
         }
         .padding(12)
         .frame(width: 220)
+        .background(Color("AppBackground").ignoresSafeArea())
     }
 
     @ViewBuilder

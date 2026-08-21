@@ -48,6 +48,8 @@ struct PlayerView: View {
                     .frame(maxHeight: .infinity)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color("AppBackground").ignoresSafeArea())
         }
     }
 

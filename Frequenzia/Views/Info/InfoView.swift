@@ -54,6 +54,8 @@ struct InfoView: View {
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(Color("AppBackground").ignoresSafeArea())
             .navigationTitle("Info")
         }
     }
