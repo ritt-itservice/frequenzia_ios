@@ -26,7 +26,7 @@ struct PlayerView: View {
             VStack(spacing: 0) {
                 if let onClose {
                     ZStack {
-                        Text(sourceTitle ?? "")
+                        Text(player.isPlaying ? "Wird gespielt" : (sourceTitle ?? ""))
                             .font(.headline)
 
                         HStack {
