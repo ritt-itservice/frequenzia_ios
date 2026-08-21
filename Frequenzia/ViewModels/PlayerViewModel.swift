@@ -18,11 +18,9 @@ import UIKit
 final class PlayerViewModel {
     private(set) var currentStation: RadioStation?
     private(set) var isPlaying: Bool = false
-    private(set) var isBuffering: Bool = false
     private(set) var errorMessage: String?
 
     private var player: AVPlayer?
-    private var timeControlObservation: NSKeyValueObservation?
     private var endTimeObserver: NSObjectProtocol?
     private var cachedArtwork: MPMediaItemArtwork?
     private var artworkTask: Task<Void, Never>?
@@ -99,7 +97,6 @@ final class PlayerViewModel {
         errorMessage = nil
         player.play()
         isPlaying = true
-        isBuffering = true
         updateNowPlayingInfo()
 
         onStationPlayed?(station)
@@ -108,34 +105,16 @@ final class PlayerViewModel {
 
     private func teardownPlayer() {
         player?.pause()
-        timeControlObservation = nil
         if let endTimeObserver {
             NotificationCenter.default.removeObserver(endTimeObserver)
         }
         endTimeObserver = nil
         player = nil
         isPlaying = false
-        isBuffering = false
         artworkTask?.cancel()
     }
 
     private func observe(player: AVPlayer, item: AVPlayerItem) {
-        timeControlObservation = player.observe(\.timeControlStatus, options: [.new]) { [weak self] observedPlayer, _ in
-            Task { @MainActor in
-                guard let self else { return }
-                switch observedPlayer.timeControlStatus {
-                case .playing:
-                    self.isBuffering = false
-                case .waitingToPlayAtSpecifiedRate:
-                    self.isBuffering = true
-                case .paused:
-                    break
-                @unknown default:
-                    break
-                }
-            }
-        }
-
         endTimeObserver = NotificationCenter.default.addObserver(
             forName: .AVPlayerItemFailedToPlayToEndTime,
             object: item,

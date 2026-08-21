@@ -122,16 +122,9 @@ struct PlayerView: View {
     private func controls(station: RadioStation) -> some View {
         ZStack {
             Button(action: { togglePlayback(station: station) }) {
-                if player.isBuffering {
-                    ProgressView()
-                        .tint(Color.accentColor)
-                        .controlSize(.large)
-                        .frame(width: 64, height: 64)
-                } else {
-                    Image(systemName: player.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 64))
-                        .foregroundStyle(Color.accentColor)
-                }
+                Image(systemName: player.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                    .font(.system(size: 64))
+                    .foregroundStyle(Color.accentColor)
             }
             .buttonStyle(.plain)
 
