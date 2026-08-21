@@ -45,4 +45,13 @@ struct RadioStation: Codable, Identifiable, Sendable, Hashable {
         if let firstTag = tagList.first { parts.append(firstTag) }
         return parts.joined(separator: " · ")
     }
+
+    /// "Land · alle Tags" für den Player – anders als `subtitle` (nur
+    /// erster Tag) zeigt das Detail alle Tags kommagetrennt.
+    var detailSubtitle: String {
+        var parts: [String] = []
+        if let country, !country.isEmpty { parts.append(country) }
+        if !tagList.isEmpty { parts.append(tagList.joined(separator: ",")) }
+        return parts.joined(separator: " · ")
+    }
 }

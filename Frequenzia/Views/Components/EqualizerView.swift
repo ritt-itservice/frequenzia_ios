@@ -2,8 +2,8 @@
 //  EqualizerView.swift
 //  Frequenzia
 //
-//  Rein dekorative Wellenform-Animation ("läuft gerade") – kein echtes
-//  Audiosignal, siehe CLAUDE.md Player-Beschreibung.
+//  Rein dekorative "läuft gerade"-Animation (hüpfende Punkte) – kein
+//  echtes Audiosignal, siehe CLAUDE.md Player-Beschreibung.
 //
 
 import SwiftUI
@@ -12,28 +12,29 @@ struct EqualizerView: View {
     var isAnimating: Bool
     var color: Color = .accentColor
 
-    @State private var grow = false
+    @State private var bounce = false
 
-    private let heights: [CGFloat] = [16, 26, 12, 22]
-    private let durations: [Double] = [0.45, 0.6, 0.4, 0.55]
+    private let dotCount = 5
+    private let dotSize: CGFloat = 7
 
     var body: some View {
-        HStack(alignment: .bottom, spacing: 4) {
-            ForEach(0..<heights.count, id: \.self) { index in
-                Capsule()
+        HStack(spacing: 6) {
+            ForEach(0..<dotCount, id: \.self) { index in
+                Circle()
                     .fill(color)
-                    .frame(width: 4, height: grow ? heights[index] : 6)
+                    .frame(width: dotSize, height: dotSize)
+                    .offset(y: bounce ? -5 : 0)
                     .animation(
                         isAnimating
-                            ? .easeInOut(duration: durations[index]).repeatForever(autoreverses: true)
+                            ? .easeInOut(duration: 0.5).repeatForever(autoreverses: true).delay(Double(index) * 0.1)
                             : .easeOut(duration: 0.2),
-                        value: grow
+                        value: bounce
                     )
             }
         }
-        .frame(height: heights.max() ?? 28, alignment: .bottom)
-        .opacity(isAnimating ? 1 : 0.4)
-        .onAppear { grow = isAnimating }
-        .onChange(of: isAnimating) { _, newValue in grow = newValue }
+        .frame(height: 20)
+        .opacity(isAnimating ? 1 : 0.35)
+        .onAppear { bounce = isAnimating }
+        .onChange(of: isAnimating) { _, newValue in bounce = newValue }
     }
 }

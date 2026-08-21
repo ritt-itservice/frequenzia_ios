@@ -88,8 +88,13 @@ struct PlayerView: View {
     }
 
     private func coverArt(size: CGFloat, station: RadioStation) -> some View {
-        StationFaviconView(url: station.faviconURL, size: size)
-            .shadow(radius: 12)
+        ZStack {
+            Circle()
+                .stroke(Color.accentColor, lineWidth: 3)
+                .frame(width: size, height: size)
+            StationFaviconView(url: station.faviconURL, size: size * 0.88)
+        }
+        .shadow(radius: 12)
     }
 
     private func stationInfo(station: RadioStation) -> some View {
@@ -99,12 +104,12 @@ struct PlayerView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
 
-            if !station.subtitle.isEmpty {
-                Text(station.subtitle)
+            if !station.detailSubtitle.isEmpty {
+                Text(station.detailSubtitle)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(3)
             }
 
             if let errorMessage = player.errorMessage {
@@ -132,9 +137,7 @@ struct PlayerView: View {
             .offset(x: -56)
 
             Button(action: { togglePlayback(station: station) }) {
-                Image(systemName: player.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .font(.system(size: 64))
-                    .foregroundStyle(Color.accentColor)
+                PlayPauseIcon(isPlaying: player.isPlaying, diameter: 76)
             }
             .buttonStyle(.plain)
         }

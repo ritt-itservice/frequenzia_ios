@@ -19,6 +19,7 @@
 		000000000000000000000018 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000017 /* RootView.swift */; };
 		00000000000000000000001A /* StationFaviconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000019 /* StationFaviconView.swift */; };
 		00000000000000000000001C /* EqualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000001B /* EqualizerView.swift */; };
+		000000000000000000000901 /* PlayPauseIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000900 /* PlayPauseIcon.swift */; };
 		00000000000000000000001E /* AlphabetIndexBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000001D /* AlphabetIndexBar.swift */; };
 		000000000000000000000021 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000020 /* SearchView.swift */; };
 		000000000000000000000023 /* StationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000022 /* StationRow.swift */; };
@@ -43,6 +44,7 @@
 		000000000000000000000017 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		000000000000000000000019 /* StationFaviconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationFaviconView.swift; sourceTree = "<group>"; };
 		00000000000000000000001B /* EqualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerView.swift; sourceTree = "<group>"; };
+		000000000000000000000900 /* PlayPauseIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseIcon.swift; sourceTree = "<group>"; };
 		00000000000000000000001D /* AlphabetIndexBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphabetIndexBar.swift; sourceTree = "<group>"; };
 		000000000000000000000020 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		000000000000000000000022 /* StationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationRow.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				000000000000000000000019 /* StationFaviconView.swift */,
 				00000000000000000000001B /* EqualizerView.swift */,
 				00000000000000000000001D /* AlphabetIndexBar.swift */,
+				000000000000000000000900 /* PlayPauseIcon.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				00000000000000000000001A /* StationFaviconView.swift in Sources */,
 				00000000000000000000001C /* EqualizerView.swift in Sources */,
 				00000000000000000000001E /* AlphabetIndexBar.swift in Sources */,
+				000000000000000000000901 /* PlayPauseIcon.swift in Sources */,
 				000000000000000000000021 /* SearchView.swift in Sources */,
 				000000000000000000000023 /* StationRow.swift in Sources */,
 				000000000000000000000026 /* PlayerView.swift in Sources */,

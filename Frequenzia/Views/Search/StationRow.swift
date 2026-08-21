@@ -43,9 +43,7 @@ struct StationRow: View {
             .buttonStyle(.plain)
 
             Button(action: onPlay) {
-                Image(systemName: isCurrent && isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                    .font(.title2)
-                    .foregroundStyle(.tint)
+                PlayPauseIcon(isPlaying: isCurrent && isPlaying, diameter: 32)
             }
             .buttonStyle(.plain)
         }

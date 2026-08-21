@@ -36,9 +36,7 @@ struct MiniPlayerView: View {
                     .frame(width: 24)
 
                 Button(action: { player.togglePlayPause() }) {
-                    Image(systemName: player.isPlaying ? "pause.fill" : "play.fill")
-                        .font(.title3)
-                        .foregroundStyle(Color.accentColor)
+                    PlayPauseIcon(isPlaying: player.isPlaying, diameter: 32)
                 }
                 .buttonStyle(.plain)
             }
