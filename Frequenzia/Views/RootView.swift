@@ -171,7 +171,8 @@ struct RootView: View {
             player: player,
             isFavorite: isFavorite,
             onToggleFavorite: toggleFavorite,
-            onClose: { isPlayerPresented = false }
+            onClose: { isPlayerPresented = false },
+            sourceTitle: selectedTab.title
         )
     }
 

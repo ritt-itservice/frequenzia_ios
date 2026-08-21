@@ -15,6 +15,9 @@ struct PlayerView: View {
     let isFavorite: Bool
     let onToggleFavorite: () -> Void
     var onClose: (() -> Void)? = nil
+    /// Name des Tabs, von dem aus der Player geöffnet wurde (z. B.
+    /// "Sender", "Favoriten"), mittig in der Titelleiste angezeigt.
+    var sourceTitle: String? = nil
 
     var body: some View {
         GeometryReader { proxy in
@@ -22,15 +25,21 @@ struct PlayerView: View {
 
             VStack(spacing: 0) {
                 if let onClose {
-                    HStack {
-                        Spacer()
-                        Button(action: onClose) {
-                            Image(systemName: "chevron.down")
-                                .font(.title2)
-                                .foregroundStyle(.secondary)
+                    ZStack {
+                        Text(sourceTitle ?? "")
+                            .font(.headline)
+
+                        HStack {
+                            Button(action: onClose) {
+                                Image(systemName: "chevron.left")
+                                    .font(.title3.weight(.semibold))
+                                    .foregroundStyle(.primary)
+                            }
+                            .buttonStyle(.plain)
+                            Spacer()
                         }
-                        .padding()
                     }
+                    .padding()
                 }
 
                 if let station = player.currentStation {
@@ -134,7 +143,7 @@ struct PlayerView: View {
                     .foregroundStyle(isFavorite ? .yellow : .primary)
             }
             .buttonStyle(.plain)
-            .offset(x: -56)
+            .offset(x: -92)
 
             Button(action: { togglePlayback(station: station) }) {
                 PlayPauseIcon(isPlaying: player.isPlaying, diameter: 76)
